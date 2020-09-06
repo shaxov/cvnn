@@ -6,9 +6,11 @@ import utils
 
 
 class ComplexZeros(Initializer):
+
     """ Zero initializer for complex layer. """
     def __init__(self, dtype=tf.dtypes.complex64):
         """
+
         Parameters
         ----------
             dtype: tf.dtypes.Dtype, optional (default=tf.dtypes.complex64)
@@ -29,6 +31,7 @@ class ComplexZeros(Initializer):
 
 
 class ComplexRandomNormal(Initializer):
+
     """ Random normal initializer for complex layer. """
     def __init__(self,
                  real_mean=0.0,
@@ -38,6 +41,7 @@ class ComplexRandomNormal(Initializer):
                  seed=None,
                  dtype=tf.dtypes.complex64):
         """
+
         Parameters
         ----------
             real_mean: float, optional (default=0.0)
@@ -80,6 +84,7 @@ class ComplexRandomNormal(Initializer):
 
 
 class ComplexRandomUniform(Initializer):
+
     """ Random uniform initializer for complex layer. """
     def __init__(self,
                  real_min_val=0.,
@@ -89,6 +94,7 @@ class ComplexRandomUniform(Initializer):
                  seed=None,
                  dtype=tf.dtypes.complex64):
         """
+
         Parameters
         ----------
             real_min_val: float, optional (default=0.0)
