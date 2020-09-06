@@ -1,0 +1,18 @@
+dist: xenial
+language: python
+
+before_install:
+  - sudo apt-get update
+
+python:
+  - "3.6"
+
+install:
+  - pip install -r requirements.txt
+
+
+env:
+  - export CODACY_PROJECT_TOKEN=a6285585b6e2465181e47fee2e52f333
+
+script:
+  - bash .testcov
