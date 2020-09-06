@@ -7,8 +7,13 @@ import utils
 
 class ComplexZeros(Initializer):
     """ Zero initializer for complex layer. """
-
     def __init__(self, dtype=tf.dtypes.complex64):
+        """
+        Parameters
+        ----------
+            dtype: tf.dtypes.Dtype, optional (default=tf.dtypes.complex64)
+                Data type of generated matrices.
+        """
         utils.check_complex_dtype(dtype)
         self.dtype = tf.dtypes.as_dtype(dtype)
 
@@ -25,7 +30,6 @@ class ComplexZeros(Initializer):
 
 class ComplexRandomNormal(Initializer):
     """ Random normal initializer for complex layer. """
-
     def __init__(self,
                  real_mean=0.0,
                  real_stddev=1.0,
@@ -33,6 +37,20 @@ class ComplexRandomNormal(Initializer):
                  imag_stddev=1.0,
                  seed=None,
                  dtype=tf.dtypes.complex64):
+        """
+        Parameters
+        ----------
+            real_mean: float, optional (default=0.0)
+                Mean value in normal distribution which is used to generate real part.
+            real_stddev: float, optional (default=1.0)
+                Standard deviation value in normal distribution which is used to generate real part.
+            imag_mean: float, optional (default=0.0)
+                Mean value in normal distribution which is used to generate imaginary part.
+            imag_stddev: float, optional (default=1.0)
+                Standard deviation value in normal distribution which is used to generate imaginary part.
+            dtype: tf.dtypes.Dtype, optional (default=tf.dtypes.complex64)
+                Data type of generated matrices.
+        """
         utils.check_complex_dtype(dtype)
         self.real_mean = real_mean
         self.imag_mean = imag_mean
@@ -63,14 +81,27 @@ class ComplexRandomNormal(Initializer):
 
 class ComplexRandomUniform(Initializer):
     """ Random uniform initializer for complex layer. """
-
     def __init__(self,
-                 real_min_val=0,
-                 real_max_val=None,
-                 imag_min_val=0,
-                 imag_max_val=None,
+                 real_min_val=0.,
+                 real_max_val=1.,
+                 imag_min_val=0.,
+                 imag_max_val=1.,
                  seed=None,
                  dtype=tf.dtypes.complex64):
+        """
+        Parameters
+        ----------
+            real_min_val: float, optional (default=0.0)
+                Min value in uniform distribution which is used to generate real part.
+            real_max_val: float, optional (default=1.0)
+                Max value value in uniform distribution which is used to generate real part.
+            imag_min_val: float, optional (default=0.0)
+                Min value in uniform distribution which is used to generate imaginary part.
+            imag_max_val: float, optional (default=1.0)
+                Max value in uniform distribution which is used to generate imaginary part.
+            dtype: tf.dtypes.Dtype, optional (default=tf.dtypes.complex64)
+                Data type of generated matrices.
+        """
         utils.check_complex_dtype(dtype)
         self.real_min_val = real_min_val
         self.real_max_val = real_max_val
@@ -86,7 +117,7 @@ class ComplexRandomUniform(Initializer):
             shape, self.real_min_val, self.real_max_val, tf.dtypes.float64, seed=self.seed)
         imag_part = random_ops.random_uniform(
             shape, self.imag_min_val, self.imag_max_val, tf.dtypes.float64, seed=self.seed)
-        initial_value = tf.dtypes.cast(complex(real_part, imag_part), dtype)
+        initial_value = tf.dtypes.cast(tf.complex(real_part, imag_part), dtype)
         return initial_value
 
     def get_config(self):
