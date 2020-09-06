@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# stop script execution if command fails
+set -e
+
+# run test coverage
+python -m coverage run --source=. -m unittest discover -s tests
+
+# create report
+python -m coverage report
+python -m coverage xml
+
+# send coverage data to codacy
+python -m codacy -r coverage.xml
+
