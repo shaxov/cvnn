@@ -11,6 +11,7 @@ import initializer
 
 
 class ComplexDense(layers.Dense):
+    """ Complex-valued fully-connected layer. """
 
     def __init__(self,
                  units,
@@ -38,6 +39,7 @@ class ComplexDense(layers.Dense):
 
 
 class ComplexDropout(layers.Dropout):
+    """ Dropout for complex-valued layer. """
 
     def call(self, inputs, training=None):
         if training is None:
