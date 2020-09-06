@@ -1,5 +1,4 @@
-from tensorflow import dtypes
-from tensorflow import complex
+import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.python.ops import nn
 from tensorflow.python.ops import array_ops
@@ -12,14 +11,29 @@ import initializer
 
 class ComplexDense(layers.Dense):
     """ Complex-valued fully-connected layer. """
-
     def __init__(self,
                  units,
                  use_bias=True,
                  kernel_initializer='complex_random_normal',
                  bias_initializer='complex_zeros',
-                 dtype=dtypes.complex64,
+                 dtype=tf.dtypes.complex64,
                  **kwargs):
+        """
+        Complex-valued fully-connected layer.
+
+        Parameters
+        ----------
+            units: int,
+                Layer output dimension.
+            use_bias: bool, optional (default=True)
+                Bias usage in layer building.
+            kernel_initializer: str, optional (default='complex_random_normal')
+                Type of kernel initializer.
+            bias_initializer: str, optional (default='complex_zeros')
+                Type of bias initializer.
+            dtype:  tf.dtypes.Dtype, optional (default=tf.dtypes.complex64)
+                Data type of kernel and bias.
+        """
         utils.check_complex_dtype(dtype)
         kwargs.update({'dtype': dtype})
         super(ComplexDense, self).__init__(
@@ -40,7 +54,6 @@ class ComplexDense(layers.Dense):
 
 class ComplexDropout(layers.Dropout):
     """ Dropout for complex-valued layer. """
-
     def call(self, inputs, training=None):
         if training is None:
             training = K.learning_phase()
@@ -70,4 +83,4 @@ class ComplexDropout(layers.Dropout):
         imag_output = tf_utils.smart_cond(training,
                                           dropped_inputs('imag'),
                                           lambda: array_ops.identity(imag_inputs))
-        return complex(real_output, imag_output)
+        return tf.complex(real_output, imag_output)
