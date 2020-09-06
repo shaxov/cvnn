@@ -1,5 +1,4 @@
-from tensorflow import dtypes
-from tensorflow import complex
+import tensorflow as tf
 from tensorflow.python.ops import array_ops
 from tensorflow.python.ops import random_ops
 from tensorflow.keras.initializers import Initializer
@@ -7,46 +6,49 @@ import utils
 
 
 class ComplexZeros(Initializer):
+    """ Zero initializer for complex layer. """
 
-    def __init__(self, dtype=dtypes.complex64):
+    def __init__(self, dtype=tf.dtypes.complex64):
         utils.check_complex_dtype(dtype)
-        self.dtype = dtypes.as_dtype(dtype)
+        self.dtype = tf.dtypes.as_dtype(dtype)
 
     def __call__(self, shape, dtype=None, partition_info=None):
         if dtype is None:
             dtype = self.dtype
-        real_part = array_ops.zeros(shape, dtypes.float64)
-        imag_part = array_ops.zeros(shape, dtypes.float64)
-        return dtypes.cast(complex(real_part, imag_part), dtype)
+        real_part = array_ops.zeros(shape, tf.dtypes.float64)
+        imag_part = array_ops.zeros(shape, tf.dtypes.float64)
+        return tf.dtypes.cast(tf.complex(real_part, imag_part), dtype)
 
     def get_config(self):
         return {"dtype": self.dtype.name}
 
 
 class ComplexRandomNormal(Initializer):
+    """ Random normal initializer for complex layer. """
+
     def __init__(self,
                  real_mean=0.0,
                  real_stddev=1.0,
                  imag_mean=0.0,
                  imag_stddev=1.0,
                  seed=None,
-                 dtype=dtypes.complex64):
+                 dtype=tf.dtypes.complex64):
         utils.check_complex_dtype(dtype)
         self.real_mean = real_mean
         self.imag_mean = imag_mean
         self.real_stddev = real_stddev
         self.imag_stddev = imag_stddev
         self.seed = seed
-        self.dtype = dtypes.as_dtype(dtype)
+        self.dtype = tf.dtypes.as_dtype(dtype)
 
     def __call__(self, shape, dtype=None, partition_info=None):
         if dtype is None:
             dtype = self.dtype
         real_part = random_ops.random_normal(
-            shape, self.real_mean, self.real_stddev, dtypes.float64, seed=self.seed)
+            shape, self.real_mean, self.real_stddev, tf.dtypes.float64, seed=self.seed)
         imag_part = random_ops.random_normal(
-            shape, self.imag_mean, self.imag_stddev, dtypes.float64, seed=self.seed)
-        return dtypes.cast(complex(real_part, imag_part), dtype)
+            shape, self.imag_mean, self.imag_stddev, tf.dtypes.float64, seed=self.seed)
+        return tf.dtypes.cast(tf.complex(real_part, imag_part), dtype)
 
     def get_config(self):
         return {
@@ -60,29 +62,31 @@ class ComplexRandomNormal(Initializer):
 
 
 class ComplexRandomUniform(Initializer):
+    """ Random uniform initializer for complex layer. """
+
     def __init__(self,
                  real_min_val=0,
                  real_max_val=None,
                  imag_min_val=0,
                  imag_max_val=None,
                  seed=None,
-                 dtype=dtypes.complex64):
+                 dtype=tf.dtypes.complex64):
         utils.check_complex_dtype(dtype)
         self.real_min_val = real_min_val
         self.real_max_val = real_max_val
         self.imag_min_val = imag_min_val
         self.imag_max_val = imag_max_val
         self.seed = seed
-        self.dtype = dtypes.as_dtype(dtype)
+        self.dtype = tf.dtypes.as_dtype(dtype)
 
     def __call__(self, shape, dtype=None, partition_info=None):
         if dtype is None:
             dtype = self.dtype
         real_part = random_ops.random_uniform(
-            shape, self.real_min_val, self.real_max_val, dtypes.float64, seed=self.seed)
+            shape, self.real_min_val, self.real_max_val, tf.dtypes.float64, seed=self.seed)
         imag_part = random_ops.random_uniform(
-            shape, self.imag_min_val, self.imag_max_val, dtypes.float64, seed=self.seed)
-        initial_value = dtypes.cast(complex(real_part, imag_part), dtype)
+            shape, self.imag_min_val, self.imag_max_val, tf.dtypes.float64, seed=self.seed)
+        initial_value = tf.dtypes.cast(complex(real_part, imag_part), dtype)
         return initial_value
 
     def get_config(self):
