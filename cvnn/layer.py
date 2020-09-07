@@ -6,7 +6,7 @@ from tensorflow.python.keras import backend as K
 from tensorflow.python.keras.utils import tf_utils
 
 import utils
-import initializer
+from cvnn import initializer
 
 
 class ComplexDense(layers.Dense):
