@@ -1,5 +1,5 @@
 import unittest
-import activation
+from cvnn import activation
 import numpy as np
 
 

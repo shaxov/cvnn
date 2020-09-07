@@ -1,5 +1,5 @@
 import unittest
-import initializer
+from cvnn import initializer
 import numpy as np
 import tensorflow as tf
 

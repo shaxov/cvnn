@@ -1,5 +1,5 @@
 import unittest
-import layer
+from cvnn import layer
 import numpy as np
 
 
