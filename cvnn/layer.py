@@ -5,8 +5,7 @@ from tensorflow.python.ops import array_ops
 from tensorflow.python.keras import backend as K
 from tensorflow.python.keras.utils import tf_utils
 
-import utils
-from cvnn import initializer
+from cvnn import initializer, utils
 
 
 class ComplexDense(layers.Dense):

@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.python.ops import array_ops
 from tensorflow.python.ops import random_ops
 from tensorflow.keras.initializers import Initializer
-import utils
+from cvnn import utils
 
 
 class ComplexZeros(Initializer):
