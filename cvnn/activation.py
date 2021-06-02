@@ -41,11 +41,32 @@ class ComplexReLU(tf.keras.layers.Layer):
         return tf.complex(real, imag)
 
 
+class ComplexTanh(tf.keras.layers.Layer):
+    """ Complex Tangent hyperbolic """
+
+    def call(self, inputs, **kwargs):
+        inputs_real, inputs_imag = tf.math.real(inputs), tf.math.imag(inputs)
+        return tf.complex(tf.math.sinh(2 * inputs_real), tf.math.sin(2 * inputs_imag)) / \
+               tf.complex(tf.math.cosh(2 * inputs_real) + tf.math.cos(2 * inputs_imag), 0.)
+
+
+class ComplexTanhR2(tf.keras.layers.Layer):
+    """ Complex Tangent hyperbolic in R^2 """
+
+    def call(self, inputs, **kwargs):
+        inputs_real, inputs_imag = tf.math.real(inputs), tf.math.imag(inputs)
+        return tf.complex(tf.math.tanh(inputs_real), tf.math.tanh(inputs_imag))
+
+
 def get(identifier):
     if identifier == 'linear':
         return lambda x: x
     elif identifier == 'relu':
         return ComplexReLU
+    elif identifier == 'tanh':
+        return ComplexTanh
+    elif identifier == 'tanhr2':
+        return ComplexTanhR2
     else:
         raise ValueError(f"Invalid name for activation function. "
                          f"Given '{identifier}', but expected 'linear' or 'relu'.")
