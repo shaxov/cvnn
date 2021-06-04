@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="cvnn",
-    version="0.0.1",
+    version="0.0.3",
     author="Maksym Shpakovych",
     author_email="maksym.shpakovych@gmail.com",
     description="Complex-valued blocks for neural network building.",

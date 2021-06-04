@@ -1,5 +1,5 @@
-from . import layer
-from . import activation
-from . import initializer
+from . import layers
+from . import activations
+from . import initializers
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"

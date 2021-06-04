@@ -1,5 +1,5 @@
 import unittest
-from cvnn import activation
+from cvnn import activations
 import numpy as np
 
 
@@ -7,7 +7,7 @@ class TestActivation(unittest.TestCase):
 
     def test_complex_relu(self):
         np.random.seed(42)
-        relu = activation.ComplexReLU()
+        relu = activations.ComplexReLU()
         x = np.exp(1j * np.random.uniform(-np.pi, np.pi, size=(10, 10))).astype('complex64')
         y = relu(x)
         x_real, x_imag = np.real(x), np.imag(x)
