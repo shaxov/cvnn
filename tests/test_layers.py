@@ -22,8 +22,7 @@ class TestLayers(unittest.TestCase):
     def test_complex_conv2d(self):
         conv2d = layers.ComplexConv2D(10, kernel_size=(3, 3))
         cimg = np.random.randn(1, 10, 10, 3) + 1j * np.random.randn(1, 10, 10, 3)
-        mask = np.random.randn(10, 10) > 0
-        _ = conv2d(cimg, mask=mask)
+        _ = conv2d(cimg.astype('complex64'))
 
     def test_complex_dense_output(self):
         dense = layers.ComplexDense(self.output_dim)
