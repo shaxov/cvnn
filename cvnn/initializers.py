@@ -138,6 +138,8 @@ class ComplexRandomUniform(Initializer):
 
 
 def get(identifier):
+    if not isinstance(identifier, str):
+        return identifier
     if identifier == "complex_zeros":
         return ComplexZeros
     elif identifier == "complex_random_normal":
