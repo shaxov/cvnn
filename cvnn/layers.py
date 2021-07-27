@@ -278,3 +278,25 @@ class ProdLayer3D(tf.keras.layers.Layer):
     def call(self, inputs, **kwargs):
         inputs3d = inputs[:, :, None, None] * inputs[:, None, :, None] * inputs[:, None, None, :]
         return inputs3d[..., None]
+
+
+class ProdLayer(tf.keras.layers.Layer):
+
+    def __init__(self, dim):
+        super(ProdLayer, self).__init__()
+        self.dim = dim
+        self._call = [ProdLayer1D(), ProdLayer2D(), ProdLayer3D()][dim - 1]
+
+    def call(self, inputs, **kwargs):
+        return self._call(inputs, **kwargs)
+
+
+class ScaleLayer(tf.keras.layers.Layer):
+
+    def __init__(self, initializer='random_normal', dtype='float32'):
+        super().__init__()
+        self.w = self.add_weight(
+            shape=(1,), initializer=initializer, dtype=dtype, trainable=True)
+
+    def call(self, inputs, **kwargs):
+        return tf.nn.sigmoid(self.w) * inputs
