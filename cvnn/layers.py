@@ -1,15 +1,9 @@
-import six
-import abc
-import functools
-
 import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.python.ops import nn
 from tensorflow.python.ops import array_ops
 from tensorflow.python.keras import backend as K
-from tensorflow.python.keras.utils import tf_utils
-from tensorflow.python.framework import tensor_shape
-from tensorflow.python.keras.utils import conv_utils
+from tensorflow.python.keras.utils import control_flow_util
 from tensorflow.python.keras.layers.convolutional import Conv
 from tensorflow.python.ops import nn_ops
 
@@ -87,10 +81,10 @@ class ComplexDropout(layers.Dropout):
 
             return _dropped_inputs
 
-        real_output = tf_utils.smart_cond(training,
+        real_output = control_flow_util.smart_cond(training,
                                           dropped_inputs('real'),
                                           lambda: array_ops.identity(real_inputs))
-        imag_output = tf_utils.smart_cond(training,
+        imag_output = control_flow_util.smart_cond(training,
                                           dropped_inputs('imag'),
                                           lambda: array_ops.identity(imag_inputs))
         return tf.complex(real_output, imag_output)
