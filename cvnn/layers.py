@@ -16,7 +16,7 @@ class ComplexDense(layers.Dense):
     def __init__(self,
                  units,
                  use_bias=True,
-                 kernel_initializer='complex_random_normal',
+                 kernel_initializer='complex_glorot_uniform',
                  bias_initializer='complex_zeros',
                  dtype=tf.dtypes.complex64,
                  **kwargs):

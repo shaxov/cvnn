@@ -137,6 +137,39 @@ class ComplexRandomUniform(Initializer):
         }
 
 
+class ComplexGlorotUniform(Initializer):
+
+    """ Glorot uniform initializer for complex layer. """
+    def __init__(self,
+                 seed=None,
+                 dtype=tf.dtypes.complex64):
+        """
+
+        Parameters
+        ----------
+            dtype: tf.dtypes.Dtype, optional (default=tf.dtypes.complex64)
+                Data type of generated matrices.
+        """
+        utils.check_complex_dtype(dtype)
+        self.real_init = tf.keras.initializers.GlorotUniform(seed=seed)
+        self.imag_init = tf.keras.initializers.GlorotUniform(seed=seed)
+        self.dtype = tf.dtypes.as_dtype(dtype)
+
+    def __call__(self, shape, dtype=None, partition_info=None):
+        if dtype is None:
+            dtype = self.dtype
+        real_part = self.real_init(shape, tf.dtypes.float32)
+        imag_part = self.imag_init(shape, tf.dtypes.float32)
+        initial_value = tf.dtypes.cast(tf.complex(real_part, imag_part), dtype)
+        return initial_value
+
+    def get_config(self):
+        return {
+            "seed": self.seed,
+            "dtype": self.dtype.name
+        }
+
+
 def get(identifier):
     if not isinstance(identifier, str):
         return identifier
@@ -146,5 +179,7 @@ def get(identifier):
         return ComplexRandomNormal
     elif identifier == "complex_random_uniform":
         return ComplexRandomUniform
+    elif identifier == "complex_glorot_uniform":
+        return ComplexGlorotUniform
     else:
         raise ValueError("Invalid initializer identifier.")
